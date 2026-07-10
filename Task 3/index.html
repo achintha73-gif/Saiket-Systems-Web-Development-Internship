@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Navigation Menu</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+    <!-- ===== NAVIGATION MENU ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="#home">
+                    <i class="fas fa-code"></i>
+                    <span>Achintha B Rathnayaka</span>
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+                <li><a href="#portfolio"><i class="fas fa-folder-open"></i> Projects</a></li>
+                <li><a href="#blog"><i class="fas fa-blog"></i> Blog</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE SECTIONS (Content) ===== -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <div class="container">
+                <h1><i class="fas fa-home"></i> Home</h1>
+                <p>Welcome to our website! This is the homepage.</p>
+                <p>Use the navigation menu above to explore different sections.</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h1><i class="fas fa-user"></i> About</h1>
+                <p>Learn more about us and what we do.</p>
+                <p>We are passionate about creating amazing web experiences.</p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <div class="container">
+                <h1><i class="fas fa-cogs"></i> Services</h1>
+                <p>Explore our wide range of services.</p>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Web Development</h3>
+                        <p>Modern, responsive websites</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Apps</h3>
+                        <p>iOS &amp; Android development</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-cloud"></i>
+                        <h3>Cloud Solutions</h3>
+                        <p>AWS, Azure, Google Cloud</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section">
+            <div class="container">
+                <h1><i class="fas fa-folder-open"></i> Portfolio</h1>
+                <p>Check out our latest projects.</p>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">Project 1</div>
+                    <div class="portfolio-item">Project 2</div>
+                    <div class="portfolio-item">Project 3</div>
+                    <div class="portfolio-item">Project 4</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section">
+            <div class="container">
+                <h1><i class="fas fa-blog"></i> Blog</h1>
+                <p>Read our latest articles and updates.</p>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <h3>Blog Post 1</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="blog-card">
+                        <h3>Blog Post 2</h3>
+                        <p>Consectetur adipiscing elit sed do eiusmod.</p>
+                    </div>
+                    <div class="blog-card">
+                        <h3>Blog Post 3</h3>
+                        <p>Tempor incididunt ut labore et dolore.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h1><i class="fas fa-envelope"></i> Contact</h1>
+                <p>Get in touch with us today!</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> achinthabuddhima73@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +94 70 406 7086</p>
+                    <p><i class="fas fa-map-pin"></i> Sri Lanka</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MySite. All rights reserved.</p>
+            <p>Task 3 - Simple Navigation Menu</p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Close menu when clicking a link (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // Active link highlighting on scroll
+        const sections = document.querySelectorAll('.section');
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinkItems.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
