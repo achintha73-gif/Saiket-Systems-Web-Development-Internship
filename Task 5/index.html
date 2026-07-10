@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="blog-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-blog"></i>
+                <span>My<span>Blog</span></span>
+            </div>
+            <button class="btn-new-post" onclick="openModal()">
+                <i class="fas fa-plus"></i> New Post
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== BLOG STATS ===== -->
+    <section class="blog-stats">
+        <div class="stat-card">
+            <i class="fas fa-file-alt"></i>
+            <div>
+                <h3 id="totalPosts">0</h3>
+                <span>Total Posts</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-clock"></i>
+            <div>
+                <h3 id="lastPost">-</h3>
+                <span>Last Updated</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG POSTS ===== -->
+    <main class="blog-container">
+        <div class="blog-grid" id="blogGrid">
+            <!-- Posts will be rendered here -->
+        </div>
+    </main>
+
+    <!-- ===== EMPTY STATE ===== -->
+    <div class="empty-state" id="emptyState">
+        <i class="fas fa-feather-alt"></i>
+        <h3>No posts yet</h3>
+        <p>Start your blogging journey by creating your first post!</p>
+        <button class="btn-empty" onclick="openModal()">
+            <i class="fas fa-plus"></i> Create First Post
+        </button>
+    </div>
+
+    <!-- ===== MODAL (Create / Edit) ===== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-pen-fancy"></i> Create New Post</h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="postForm" onsubmit="savePost(event)">
+                    <input type="hidden" id="editId" value="">
+                    
+                    <div class="form-group">
+                        <label>Post Title <span class="required">*</span></label>
+                        <input type="text" id="postTitle" placeholder="Enter your post title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Author Name <span class="required">*</span></label>
+                        <input type="text" id="postAuthor" placeholder="Your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="postCategory">
+                            <option value="Technology">💻 Technology</option>
+                            <option value="Lifestyle">🌿 Lifestyle</option>
+                            <option value="Travel">✈️ Travel</option>
+                            <option value="Food">🍕 Food</option>
+                            <option value="Health">💪 Health</option>
+                            <option value="Business">📊 Business</option>
+                            <option value="Other">📌 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Content <span class="required">*</span></label>
+                        <textarea id="postContent" rows="6" placeholder="Write your post content here..." required></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> <span id="saveBtnText">Publish Post</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST NOTIFICATION ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Post saved successfully!</span>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="blog-footer">
+        <p>&copy; MyBlog. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
