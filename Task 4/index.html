@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Form</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+    <div class="container">
+        <!-- Form Header -->
+        <div class="form-header">
+            <h1><i class="fas fa-paper-plane"></i> Contact Us</h1>
+            <p>Fill in the form below and we'll get back to you as soon as possible.</p>
+        </div>
+
+        <!-- ===== CONTACT FORM ===== -->
+        <form class="contact-form" id="contactForm" onsubmit="return validateForm()" novalidate>
+
+            <!-- ===== FULL NAME ===== -->
+            <div class="form-group">
+                <label for="fullName">
+                    <i class="fas fa-user"></i> Full Name <span class="required">*</span>
+                </label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required />
+                <span class="error-message" id="nameError"><i class="fas fa-exclamation-circle"></i> Please enter your full name</span>
+            </div>
+
+            <!-- ===== EMAIL ===== -->
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i> Email Address <span class="required">*</span>
+                </label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+                <span class="error-message" id="emailError"><i class="fas fa-exclamation-circle"></i> Please enter a valid email address</span>
+            </div>
+
+            <!-- ===== PHONE ===== -->
+            <div class="form-group">
+                <label for="phone">
+                    <i class="fas fa-phone"></i> Phone Number
+                </label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" />
+            </div>
+
+            <!-- ===== SUBJECT (Dropdown) ===== -->
+            <div class="form-group">
+                <label for="subject">
+                    <i class="fas fa-tag"></i> Subject <span class="required">*</span>
+                </label>
+                <select id="subject" name="subject" required>
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="sales">Sales &amp; Pricing</option>
+                    <option value="careers">Careers &amp; Jobs</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                </select>
+                <span class="error-message" id="subjectError"><i class="fas fa-exclamation-circle"></i> Please select a subject</span>
+            </div>
+
+            <!-- ===== MESSAGE ===== -->
+            <div class="form-group">
+                <label for="message">
+                    <i class="fas fa-comment"></i> Message <span class="required">*</span>
+                </label>
+                <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                <span class="error-message" id="messageError"><i class="fas fa-exclamation-circle"></i> Please enter at least 10 characters</span>
+            </div>
+
+            <!-- ===== RADIO BUTTONS: Preferred Contact Method ===== -->
+            <div class="form-group">
+                <label><i class="fas fa-address-card"></i> Preferred Contact Method <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label class="radio-option" data-value="email">
+                        <input type="radio" name="contactMethod" value="email" checked />
+                        <span class="radio-custom"></span>
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+
+                    <label class="radio-option" data-value="whatsapp">
+                        <input type="radio" name="contactMethod" value="whatsapp" />
+                        <span class="radio-custom"></span>
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </label>
+                </div>
+            </div>
+
+            <!-- ===== TERMS (Hidden - Fix for validation) ===== -->
+            <div class="form-group" style="display:none;">
+                <input type="checkbox" id="terms" checked />
+            </div>
+
+            <!-- ===== SUBMIT BUTTON ===== -->
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                <button type="reset" class="btn-reset" onclick="resetForm()">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+
+            <!-- ===== SUCCESS MESSAGE ===== -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <h3>Thank You!</h3>
+                <p>Your message has been sent successfully. We'll get back to you soon.</p>
+                <button type="button" class="btn-new" onclick="resetForm()">
+                    <i class="fas fa-plus"></i> Send Another
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // =============================================
+        // ===== RADIO BUTTON - SELECTION + LINKS =====
+        // =============================================
+        document.querySelectorAll('.radio-option').forEach(opt => {
+            opt.addEventListener('click', function(e) {
+                // Don't trigger if clicking on the radio itself
+                if (e.target.tagName === 'INPUT') return;
+                
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Remove selected from all, add to this
+                document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // ===== CONTACT METHOD HANDLER =====
+                if (radio.value === 'whatsapp') {
+                    window.open('https://wa.me/94704067086', '_blank');
+                } else if (radio.value === 'email') {
+                    window.location.href = 'mailto:achinthabuddhima73@gmail.com';
+                }
+            });
+        });
+
+        // ===== DEFAULT SELECTED =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const checked = document.querySelector('.radio-option input[type="radio"]:checked');
+            if (checked) {
+                checked.parentElement.classList.add('selected');
+            }
+        });
+
+        // =============================================
+        // ===== FORM VALIDATION =====
+        // =============================================
+        function validateForm() {
+            let isValid = true;
+
+            // NAME VALIDATION
+            const name = document.getElementById('fullName');
+            const nameError = document.getElementById('nameError');
+            if (name.value.trim() === '' || name.value.length < 2) {
+                nameError.style.display = 'block';
+                name.classList.add('error');
+                isValid = false;
+            } else {
+                nameError.style.display = 'none';
+                name.classList.remove('error');
+            }
+
+            // EMAIL VALIDATION
+            const email = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value.trim())) {
+                emailError.style.display = 'block';
+                email.classList.add('error');
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+                email.classList.remove('error');
+            }
+
+            // SUBJECT VALIDATION
+            const subject = document.getElementById('subject');
+            const subjectError = document.getElementById('subjectError');
+            if (subject.value === '') {
+                subjectError.style.display = 'block';
+                subject.classList.add('error');
+                isValid = false;
+            } else {
+                subjectError.style.display = 'none';
+                subject.classList.remove('error');
+            }
+
+            // MESSAGE VALIDATION
+            const message = document.getElementById('message');
+            const messageError = document.getElementById('messageError');
+            if (message.value.trim() === '' || message.value.length < 10) {
+                messageError.style.display = 'block';
+                message.classList.add('error');
+                isValid = false;
+            } else {
+                messageError.style.display = 'none';
+                message.classList.remove('error');
+            }
+
+            // IF VALID, SHOW SUCCESS
+            if (isValid) {
+                document.getElementById('successMessage').classList.add('show');
+                document.querySelector('.contact-form').style.opacity = '0.6';
+                document.querySelector('.contact-form').style.pointerEvents = 'none';
+
+                document.getElementById('successMessage').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                return false;
+            }
+
+            // Scroll to first error
+            const firstError = document.querySelector('.error-message[style*="display: block"]');
+            if (firstError) {
+                firstError.parentElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+            return false;
+        }
+
+        // =============================================
+        // ===== REAL-TIME VALIDATION =====
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Name
+            const name = document.getElementById('fullName');
+            name.addEventListener('input', function() {
+                if (this.value.trim().length >= 2) {
+                    document.getElementById('nameError').style.display = 'none';
+                    this.classList.remove('error');
+                }
+            });
+
+            // Email
+            const email = document.getElementById('email');
+            email.addEventListener('input', function() {
+                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (pattern.test(this.value.trim())) {
+                    document.getElementById('emailError').style.display = 'none';
+                    this.classList.remove('error');
+                }
+            });
+
+            // Subject
+            const subject = document.getElementById('subject');
+            subject.addEventListener('change', function() {
+                if (this.value !== '') {
+                    document.getElementById('subjectError').style.display = 'none';
+                    this.classList.remove('error');
+                }
+            });
+
+            // Message
+            const message = document.getElementById('message');
+            message.addEventListener('input', function() {
+                if (this.value.trim().length >= 10) {
+                    document.getElementById('messageError').style.display = 'none';
+                    this.classList.remove('error');
+                }
+            });
+        });
+
+        // =============================================
+        // ===== RESET FUNCTION =====
+        // =============================================
+        function resetForm() {
+            document.getElementById('successMessage').classList.remove('show');
+            document.querySelector('.contact-form').style.opacity = '1';
+            document.querySelector('.contact-form').style.pointerEvents = 'all';
+
+            // Clear all error states
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            
+            // Reset radio selection
+            document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('selected'));
+            const checked = document.querySelector('.radio-option input[type="radio"]:checked');
+            if (checked) {
+                checked.parentElement.classList.add('selected');
+            }
+
+            // Reset form
+            document.getElementById('contactForm').reset();
+        }
+    </script>
+
+</body>
+</html>
