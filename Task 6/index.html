@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Interactive App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== BACKGROUND ===== -->
+    <div class="bg-effects">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="app-container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="app-header glass">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <span>Task<span>Flow</span></span>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-filter" onclick="toggleFilter()">
+                        <i class="fas fa-sliders-h"></i> <span>Filter</span>
+                    </button>
+                    <button class="btn-theme" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== STATS BAR ===== -->
+        <section class="stats-bar">
+            <div class="stat-item glass">
+                <span class="stat-number" id="totalTasks">0</span>
+                <span class="stat-label"><i class="fas fa-list"></i> Total</span>
+            </div>
+            <div class="stat-item glass">
+                <span class="stat-number" id="pendingTasks">0</span>
+                <span class="stat-label"><i class="fas fa-clock"></i> Pending</span>
+            </div>
+            <div class="stat-item glass">
+                <span class="stat-number" id="completedTasks">0</span>
+                <span class="stat-label"><i class="fas fa-check-circle"></i> Completed</span>
+            </div>
+            <div class="stat-item glass">
+                <span class="stat-number" id="completionRate">0%</span>
+                <span class="stat-label"><i class="fas fa-chart-line"></i> Progress</span>
+            </div>
+        </section>
+
+        <!-- ===== PROGRESS BAR ===== -->
+        <div class="progress-container glass">
+            <div class="progress-info">
+                <span>Overall Progress</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- ===== FILTER BAR ===== -->
+        <div class="filter-bar glass" id="filterBar">
+            <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">
+                <i class="fas fa-list"></i> All
+            </button>
+            <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">
+                <i class="fas fa-clock"></i> Pending
+            </button>
+            <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">
+                <i class="fas fa-check-circle"></i> Done
+            </button>
+            <span class="filter-divider"></span>
+            <button class="filter-btn" data-filter="high" onclick="setFilter('high')">
+                <span class="dot high"></span> High
+            </button>
+            <button class="filter-btn" data-filter="medium" onclick="setFilter('medium')">
+                <span class="dot medium"></span> Medium
+            </button>
+            <button class="filter-btn" data-filter="low" onclick="setFilter('low')">
+                <span class="dot low"></span> Low
+            </button>
+        </div>
+
+        <!-- ===== ADD TASK ===== -->
+        <div class="add-task-section glass">
+            <div class="add-task-form">
+                <div class="input-wrapper">
+                    <i class="fas fa-plus-circle input-icon"></i>
+                    <input type="text" id="taskInput" placeholder="What do you need to do?" onkeypress="handleEnter(event)">
+                </div>
+                <div class="select-wrapper">
+                    <i class="fas fa-flag select-icon"></i>
+                    <select id="prioritySelect">
+                        <option value="low">🟢 Low</option>
+                        <option value="medium" selected>🟡 Medium</option>
+                        <option value="high">🔴 High</option>
+                    </select>
+                </div>
+                <button class="btn-add" onclick="addTask()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== TASK LIST ===== -->
+        <main class="task-list-container glass">
+            <div class="task-list-header">
+                <span class="tasks-count" id="tasksCount">0 tasks</span>
+                <div class="header-actions-right">
+                    <button class="btn-sort" onclick="sortTasks()" title="Sort by date">
+                        <i class="fas fa-sort"></i>
+                    </button>
+                    <button class="btn-clear" onclick="clearCompleted()">
+                        <i class="fas fa-trash-alt"></i> Clear Done
+                    </button>
+                </div>
+            </div>
+            <div class="task-list" id="taskList">
+                <!-- Tasks will be rendered here -->
+            </div>
+        </main>
+
+        <!-- ===== EMPTY STATE ===== -->
+        <div class="empty-state glass" id="emptyState">
+            <div class="empty-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>All Done! 🎉</h3>
+            <p>You have no tasks. Add a new task to get started.</p>
+            <button class="btn-empty" onclick="addExampleTasks()">
+                <i class="fas fa-plus"></i> Add Example Tasks
+            </button>
+        </div>
+
+        <!-- ===== TOAST ===== -->
+        <div class="toast" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Task added!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
